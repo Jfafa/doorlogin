@@ -1,0 +1,147 @@
+---
+import Footer from '../components/footer.astro';
+import Header from '../components/header.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import json from "../../pages.json" assert {type: 'json'};
+// export interface Props {
+// 	title: string;
+// }
+
+const { content, headings } = Astro.props;
+// const allPosts = await Astro.glob('../pages/post/*.mdx');
+const shuffled = json.sort(() => 0.5 - Math.random());
+const suggestedPosts = shuffled.slice(0, 20);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>
+			{content.title} - {process.env.SITE_NAME}✨
+		</title>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+
+		<link
+			href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700"
+			rel="stylesheet"
+		/>
+
+		<link rel="icon" href="../../favicon.svg" sizes="any" type="image/svg+xml">
+
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../css/post.css" />
+	</head>
+	<body>
+		<Header isPage=true></Header>
+
+		<div
+			class="hero-wrap hero-wrap-2"
+			style="background-image: url('../../images/bg_1.jpg')"
+			data-stellar-background-ratio="0.5"
+		>
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text align-items-end justify-content-start"
+				>
+					<div
+						class="col-md-8  text-center text-md-left mb-5"
+					>
+						<p class="breadcrumbs">
+							<span class="mr-2"><a href="./">Home</a></span>
+							<span class="mr-2"
+								><a href="./posts/1">Blog</a></span
+							>
+							<span>{content.title} Details</span>
+						</p>
+						<h1 class="mb-3 bread">{content.title}</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+
+		<section class="ftco-section ftco-degree-bg"></section>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8">
+					<TableOfContents headings={headings} />
+                    <slot />
+
+                    <div class="tag-widget post-tag-container mb-5 mt-5">
+                        <div class="tagcloud">
+							{content.title.split(" ").map(part => {
+								return <a href="#" class="tag-cloud-link">{part}</a>
+							})}
+                        </div>
+                    </div>
+
+                    <div class="pt-5 mt-5">
+                        <h3 class="mb-5">0 Comments</h3>
+
+                        <!-- END comment-list -->
+
+                        <div class="comment-form-wrap pt-5">
+                            <h3 class="mb-5">Leave a comment</h3>
+                            <form action="#" class="p-5 bg-light">
+                                <div class="form-group">
+                                    <label for="name">Name *</label>
+                                    <input type="text" class="form-control" id="name" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" class="form-control" id="email" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="website">Website</label>
+                                    <input type="url" class="form-control" id="website" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+				<div class="col-lg-4 sidebar pl-lg-5 ">
+                    <div class="sidebar-box">
+                        <form action="#" class="search-form">
+                            <div class="form-group">
+                                <span class="fa fa-search"></span>
+                                <input type="text" class="form-control" placeholder="Type a keyword and hit enter" />
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="sidebar-box ">
+                        <h3>Related Posts</h3>
+						{suggestedPosts.map(post => {return <div class="block-21 mb-4 d-flex">
+                            <div class="text">
+                                <h3 class="heading"><a href={`${post.url}/`}>{post.frontmatter.title}</a></h3>
+                            </div>
+                        </div>})}
+                    </div>
+					<div class="sidebar-box">
+                        <h3>Related tags</h3>
+                        <div class="tagcloud">
+							{content.title.split(" ").map(part => {
+								return <a href="#" class="tag-cloud-link">{part}</a>
+							})}
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</body>
+
+	<Footer isPage=true></Footer>
+</html>

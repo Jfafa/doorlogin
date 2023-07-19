@@ -1,0 +1,110 @@
+---
+import Footer from "../../components/footer.astro";
+import Header from "../../components/header.astro";
+import json from "../../../pages.json" assert {type: 'json'};
+export interface Props {
+[x: string]: any;
+	title: string;
+}
+
+export async function getStaticPaths({ paginate }) {
+//   const posts = await Astro.glob('../../pages/post/*.mdx');
+  
+  
+  return paginate(json, { pageSize: 30 });
+}
+const posts = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>
+			 {process.env.SITE_NAME}✨ Best Login Solution for everyone
+		</title>
+		<link rel="icon" href="../../favicon.svg" sizes="any" type="image/svg+xml">
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+
+		<link
+			href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700"
+			rel="stylesheet"
+		/>
+
+		<link rel="stylesheet" href="../../css/style.css" />
+		<link rel="stylesheet" href="../../css/post.css" />
+	</head>
+	<body>
+		<Header isPage=true />
+		<div
+			class="hero-wrap hero-wrap-2"
+			style="background-image: url('../../images/bg_1.jpg');"
+			data-stellar-background-ratio="0.5"
+		>
+			<div class="overlay"></div>
+			<div class="container">
+				<div
+					class="row no-gutters slider-text align-items-end justify-content-start"
+				>
+					<div
+						class="col-md-8  text-center text-md-left mb-5"
+					>
+						<p class="breadcrumbs mb-0">
+							<span class="mr-3"
+								><a href="./"
+									>Home <i class="ion-ios-arrow-forward"
+									></i></a
+								></span
+							>
+							<span>Blog</span>
+						</p>
+						<h1 class="mb-3 bread">Blog</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<section class="ftco-section bg-light">
+			<div class="container">
+				<div class="row">
+					{posts.page.data.map(post => {
+						return <div class="col-md-4 ">
+							<div class="blog-entry"> </a>
+								<div class="text d-flex py-4">
+									<div class="meta mb-3">
+										<div><a href={`${post.url}/`}>Admin</a></div>
+									</div>
+									<div class="desc pl-3">
+										<h3 class="heading"><a href={`${post.url}/`}>{post.frontmatter.title}</a></h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					})}
+				</div>
+
+				<div class="row mt-5">
+					<div class="col text-center">
+						<div class="block-27">
+							<ul>
+								{posts.page.currentPage - 1 > 0 &&
+									<li><a href={`./posts?page=${posts.page.currentPage - 1}`}>prev</a></li>
+								}
+				
+								{posts.page.currentPage + 1 < posts.page.lastPage &&
+									<li><a href={`./posts?page=${posts.page.currentPage + 1}`}>next</a></li>
+								}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<Footer isPage=true  />
+	</body>
+
+	
+</html>

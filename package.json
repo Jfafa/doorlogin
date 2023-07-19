@@ -1,0 +1,20 @@
+{
+  "name": "tremendous-trappist",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "export SITE_NAME=loginskeeper.com && astro dev",
+    "start": "astro dev",
+    "build": "export SITE_NAME=loginskeeper.com && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^0.19.7",
+    "@astrojs/sitemap": "^1.4.0",
+    "astro": "^2.8.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.3.3"
+  }
+}

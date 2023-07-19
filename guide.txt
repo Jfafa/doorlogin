@@ -1,0 +1,25 @@
+scp -r * root@194.163.138.42:/var/www/loginskeeper.com
+
+server {
+    listen 80;
+    server_name loginskeeper.com www.loginskeeper.com;
+
+    location / {
+        root /var/www/loginskeeper.com;
+        index index.html;
+        try_files $uri $uri/ =404;
+    }
+
+    error_page 404 /404.html;
+    location = /40x.html {
+    }
+
+    error_page 500 502 503 504 /50x.html;
+    location = /50x.html {
+    }
+}
+
+
+sudo chown -R www-data:www-data /var/www/mywebsite
+
+sudo chown -R www-data:www-data /var/www/loginskeeper.com
